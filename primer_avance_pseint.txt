@@ -1,0 +1,78 @@
+Algoritmo sin_titulo
+	
+	Escribir "Ingrese su mail:"
+    leer mail
+	repetir
+		Escribir "Crea una contraseña:"
+		Leer contraseña
+		
+		Escribir "Confimar contaseña:"
+		leer comfcontra
+		
+		Si comfcontra = contraseña Entonces
+			Escribir "Se ha registrado correctamente"
+		SiNo
+			Escribir "Lacontraseña no coincide, intente de nuevo."
+			
+		Fin Si
+		hasta que	comfcontra == contraseña
+		
+		escribir "Ingrese su nombrey apellido: "
+		Leer nombreyapellido
+		
+		Escribir "Seleccione un vehiculo, 1 para camioneta, 2 para auto, 3 convertible: "
+		Leer Tvehiculo
+		
+		Repetir
+			si Tvehiculo <> "1" y Tvehiculo <> "2" y Tvehiculo <> "3"
+				escribir "La opcion ingresada no es valida, porfavor intente denuevo."
+				Leer Tvehiculo
+			finsi
+		Hasta Que Tvehiculo == "1" o Tvehiculo == "2" o Tvehiculo == "3"
+		
+		
+		Si Tvehiculo == "1" Entonces
+			Escribir "La opcion que usted ha seleccionado se encuentra disponible, ahora vamos a pedirle algunos datos para validar la reserva."
+		SiNo
+			Si Tvehiculo == "2" Entonces
+				Escribir "La opcion que usted ha seleccionado se encuentra disponible, ahora vamos a pedirle algunos datos para validar la reserva."
+			SiNo
+				Si Tvehiculo == "3" Entonces
+					Escribir "La opcion que usted ha seleccionado se encuentra disponible, ahora vamos a pedirle algunos datos para validar la reserva."
+				Fin Si
+			Fin Si
+		Fin si
+		
+		Escribir "ingrese su edad: "
+		leer edad
+		
+		Escribir "¿Tiene licencia de conducir?, 1 para si, 2 para no: "
+		Leer tienelicencia
+		
+		Repetir
+			si tienelicencia <> "1" y tienelicencia <> "2"
+				escribir "La opcion ingresada no es valida, porfavor intente denuevo."
+				Leer tienelicencia
+			finsi
+		Hasta Que tienelicencia == "1" o tienelicencia == "2"
+		
+		
+		si tienelicencia == "1"
+			Escribir "ingrese el tipo de licencia, 1 para licencia nacional, 2 para licencia turista: "
+			leer Tlicencia
+			
+			Escribir "Ingrese la fecha de vencimiento de su licencia: "
+			leer VencimientoL
+			
+			Escribir "ingrese su numero de documento: "
+			leer documento
+			
+		sino 
+			si tienelicencia == "2"
+				escribir "Lo sentimos, no es posible alquilar un vehiculo si usted no tiene licencia."
+			FinSi
+		Fin si
+		
+		
+		
+FinAlgoritmo
