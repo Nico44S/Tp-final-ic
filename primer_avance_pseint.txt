@@ -1,3 +1,243 @@
+//funcion para definir temporada
+Funcion temporada <- def_temporada (mes)
+	Si (mes>=3 Y mes<=5) O (mes>=10 Y mes<=11) Entonces
+		temporada <- 0.15
+	SiNo
+		temporada <- 0
+	FinSi
+Fin Funcion
+//funcion para equipo de invierno
+Funcion equipo_invierno <- def_equipo_invierno (mes)
+	Si mes>=6 Y mes<=9 Entonces
+		equipo_invierno <- 10
+	SiNo
+		equipo_invierno <- 0
+	FinSi
+Fin Funcion
+//funcion para pedir y validar contraseña
+funcion def_contraseña
+	Repetir
+		Escribir 'Crea una contraseña:'
+		Leer CONTRASENA
+		Escribir 'Confimar contaseña:'
+		Leer comfcontra
+		Si comfcontra=CONTRASENA Entonces
+			Escribir 'Se ha registrado correctamente'
+		SiNo
+			Escribir 'Lacontraseña no coincide, intente de nuevo.'
+		FinSi
+	Hasta Que comfcontra==CONTRASENA
+FinFuncion
+//funcion vip
+funcion vip <- def_vip (mes)
+	Escribir '¿usted posee el plan vip?'
+	Escribir 'presione 1 para si'
+	Escribir 'presione cualquier otra tecla para no'
+	Leer conf_vip
+	Si conf_vip == "1" Entonces
+		Escribir 'ingrese el numero de su tarjeta vip'
+		Leer numero_vip
+		Escribir 'ingrese el mes de vencimiento'
+		Leer mes_vencimiento_vip
+		Escribir 'ingrese el año de vencimiento'
+		Leer año_vencimiento_vip
+		Si año_vencimiento_vip>25 Entonces
+			vip <- 0.25
+		SiNo
+			Si mes_vencimiento_vip>mes y año_vencimiento_vip == 25 Entonces
+				vip <- 0.25
+			SiNo
+				si conf_vip == "1" entonces
+					Escribir 'lo sentimos su tarjeta vip esta vencida, no sera posible aplicar el descuento'
+					vip <- 0
+				fin si
+			FinSi
+		FinSi
+		
+	SiNo
+		vip <- 0
+	FinSi
+FinFuncion
+//funcion para definir el vehiculo segun el terreno
+funcion tvehiculo <- def_terreno 
+	Escribir '¿va a transitar por terrenos montañosos o de ripio?'
+	Escribir 'presione 1 para si'
+	Escribir 'cualquier otra tecla para no'
+	Leer tipo_terreno
+	Si tipo_terreno=='1' Entonces
+		Escribir 'como usted va a transitar por terrenos montaños, por politicas de la empresa se le  ha asignado una comioneta 4x4'
+		Tvehiculo <- '1'
+	SiNo
+		Repetir
+			Si Tvehiculo<>'1' Y Tvehiculo<>'2' Y Tvehiculo<>'3' Entonces
+				Escribir 'La opcion ingresada no es valida, porfavor intente denuevo.'
+				Leer Tvehiculo
+			FinSi
+		Hasta Que Tvehiculo=='1' O Tvehiculo=='2' O Tvehiculo=='3'
+	FinSi
+FinFuncion
+//funcion para fin de semana si (cantidad de disas)
+funcion cant_dias <- def_fin_semana_si_dias (fin_semana)
+	Si fin_semana=='1' Entonces
+		cant_dias <- 3
+	FinSi
+FinFuncion
+
+
+//funcion para verificacion de licencia de conducir
+funcion licencia <- def_licencia 
+	Escribir '¿Posee licenca de conducir?, ingrese 1 para si, cualquier otra tecla para no.'
+	Leer licencia
+FinFuncion
+
+//funcion para definir el mes de vincimiento de la licencina de conducir 
+funcion mes_vencimiento <- def_mes_licencia (licencia)
+	si licencia == "1" Entonces
+		Escribir 'ingrese el mes de vencimiento de su licencia de conducir'
+		Leer mes_vencimiento
+	FinSi
+FinFuncion
+
+//funcion para definir el año de vencimiento para la licencia de conducir
+funcion año_vencimiento_licencia <- def_año_licencia (licencia)
+	si licencia == "1" Entonces
+		Escribir 'ingrese el año de vencimiento de su licencia'
+		Leer año_vencimiento_licencia
+	FinSi
+FinFuncion
+
+//funcion  definir cantidad de dias si no es fin de semana
+funcion can_dias <- def_can_dias (fin_semana)
+	si fin_semana <> "1" Entonces
+		Escribir 'ingrese la cantidad de dias que quiere alquilar el vehiculo'
+		Leer cant_dias
+	FinSi
+FinFuncion
+
+//funcion para definir la tarifa por dia segun la cantidad de dias que alquilo
+funcion tarifa_por_dia <- def_tarifa_por_dia
+	Escribir '¿quiere alquilar el vehiculo para el fin de semana (viernes, sabado, domingo)?'
+	Escribir 'ingrese 1 para si'
+	Escribir 'ingrese cualquier otra tecla para no'
+	Leer fin_semana
+	Si fin_semana=='1' Entonces 
+		cant_dias <- 3
+		tarifa_por_dia <- 0.05
+	SiNo
+		Escribir 'ingrese la cantidad de dias que quiere alquilar el vehiculo'
+		Leer cant_dias
+		Si cant_dias < 7 Entonces
+			tarifa_por_dia <- 0
+		SiNo
+			Si cant_dias>=7 Y cant_dias<30 Entonces
+				tarifa_por_dia <- -0.05
+			sino 
+				tarifa_por_dia <- -0.10
+			FinSi
+		FinSi
+	FinSi
+FinFuncion
+
+
+
+
+
+
+//funcion Para definir el nombre del vehiculo selecionado 
+Funcion tvehiculo_factura <- def_nombre_vehiculo (Tvehiculo)
+	Si Tvehiculo=='1' Entonces
+		Escribir 'La opcion que usted ha seleccionado se encuentra disponible, ahora vamos a pedirle algunos datos para validar la reserva.'
+		tvehiculo_factura <- 'camioneta'
+	SiNo
+		Si Tvehiculo=='2' Entonces
+			Escribir 'La opcion que usted ha seleccionado se encuentra disponible, ahora vamos a pedirle algunos datos para validar la reserva.'
+			tvehiculo_factura <- 'auto'
+		SiNo
+			Si Tvehiculo=='3' Entonces
+				Escribir 'La opcion que usted ha seleccionado se encuentra disponible, ahora vamos a pedirle algunos datos para validar la reserva.'
+				tvehiculo_factura <- 'convertible'
+			FinSi
+		FinSi
+	FinSi
+FinFuncion
+//funcion Para definir el precio del vehiculo selecionado 
+Funcion precio_vehiculo <- def_precio_vehiculo (Tvehiculo)
+	Si Tvehiculo=='1' Entonces
+		Escribir 'La opcion que usted ha seleccionado se encuentra disponible, ahora vamos a pedirle algunos datos para validar la reserva.'
+		precio_vehiculo <- 150
+	SiNo
+		Si Tvehiculo=='2' Entonces
+			Escribir 'La opcion que usted ha seleccionado se encuentra disponible, ahora vamos a pedirle algunos datos para validar la reserva.'
+			precio_vehiculo <- 100
+		SiNo
+			Si Tvehiculo=='3' Entonces
+				Escribir 'La opcion que usted ha seleccionado se encuentra disponible, ahora vamos a pedirle algunos datos para validar la reserva.'
+				precio_vehiculo <- 250
+			FinSi
+		FinSi
+	FinSi
+FinFuncion
+//funcion para calcular el recargo por zona
+Funcion zona <- def_precio_zona 
+	Escribir 'si usted va a transitar por alguna de las siguientes zonas presione 1, sino presione cualquier otra tecla'
+	Escribir 'circuito chico'
+	Escribir 'cerro catedral'
+	Escribir 'ruta 40'
+	Leer zona
+	Si zona=1 Entonces
+		zona <- 0.5
+	SiNo
+		zona <- 0
+	FinSi
+FinFuncion
+
+
+
+
+
+
+
+//funcion Para definir nacionalidad,turista nacional, o reseidente y domicilio del hospedaje en caso de que sea turista
+Funcion domicilio_turista <- def_domicilio_turista 
+	Escribir 'Si usted posee nacionalidad argentina presione 1, sino presione cualquier otra tecla'
+	Leer nacionalidad
+	Si nacionalidad = '1' Entonces
+		Escribir '¿usted recide en Bariloche?'
+		Escribir 'presione 1 para si'
+		Escribir 'presione cualquier otra tecla para no'
+		Leer turista_recidente
+		si turista_recidente <> "1" entonces 
+			Escribir 'ingrese el domicilio donde se este quedando, (hotel, departamento, casa de familia, etc)'
+			Leer domicilio_turista
+		FinSi
+	SiNo
+		Escribir 'ingrese el domicilio donde se este quedando, (hotel, departamento, casa de familia, etc)'
+		Leer domicilio_turista
+	FinSi
+FinFuncion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//funcion para calcular el precio
+Funcion precio_total <- def_calculo_precio (cant_dias, precio_vehiculo, seguro, equipo_invierno, temporada, vip, zona, tarifa_por_dia)
+	precio_total <- cant_dias*(precio_vehiculo+seguro+equipo_invierno-(precio_vehiculo*temporada)-(precio_vehiculo*vip)+(precio_vehiculo*zona)+(precio_vehiculo*tarifa_por_dia))
+FinFuncion
+
+
+
 Algoritmo sin_titulo
 	// generacion aleatoria de dia
 	dia_aleatorio <- azar(29) + 1
@@ -10,202 +250,96 @@ Algoritmo sin_titulo
 	//generacion aleatoria de numero de patente
 	numero_patente = azar (899) + 100
 	seguro <- 20
-	Si mes>=6 Y mes<=9 Entonces
-		equipo_invierno <- 10
-	SiNo
-		equipo_invierno <- 0
-	FinSi
-	Si (mes>=3 Y mes<=5) O (mes>=10 Y mes<=11) Entonces
-		temporada <- 0.15
-	SiNo
-		temporada <- 0
-	FinSi
-	tarifa_fin_semana <- 0.5
-	tarifa_semanal <- -0.05
-	tarifa_mensual <- -0.10
-	Escribir 'Ingrese su mail:'
-	Leer mail
-	Repetir
-		Escribir 'Crea una contraseña:'
-		Leer CONTRASENA
-		Escribir 'Confimar contaseña:'
-		Leer comfcontra
-		Si comfcontra=CONTRASENA Entonces
-			Escribir 'Se ha registrado correctamente'
-		SiNo
-			Escribir 'Lacontraseña no coincide, intente de nuevo.'
-		FinSi
-		tarifa_diaria <- 0
-	Hasta Que comfcontra==CONTRASENA
-	Escribir '¿usted posee el plan vip?'
-	Escribir 'presione 1 para si'
-	Escribir 'presione cualquier otra tecla para no'
-	Leer conf_vip
-	Si conf_vip==1 Entonces
-		Escribir 'ingrese el numero de su tarjeta vip'
-		Leer numero_vip
-		Escribir 'ingrese el mes de vencimiento'
-		Leer mes_vencimiento_vip
-		Escribir 'ingrese el año de vencimiento'
-		Leer año_vencimiento_vip
-	SiNo
-		vip <- 0
-	FinSi
-	Si año_vencimiento_vip>25 Entonces
-		vip <- 0.25
-	SiNo
-		Si mes_vencimiento_vip>mes y año_vencimiento_vip == 25 Entonces
-			vip <- 0.25
-		SiNo
-			si conf_vip == 1 entonces
-			Escribir 'lo sentimos su tarjeta vip esta vencida, no sera posible aplicar el descuento'
-			vip <- 0
-			fin si
-		FinSi
-	FinSi
+	
+	
+	equipo_invierno = def_equipo_invierno (mes)
+	temporada = def_temporada (mes)
+	
+	
+	def_contraseña 
+	
+	
+	
+	vip = def_vip (mes)
+	
+	
 	Escribir 'Ingrese su nombre y apellido: '
 	Leer nombreyapellido
 	Escribir 'ingrese su edad: '
 	Leer edad
-	Escribir '¿va a transitar por terrenos montañosos o de ripio?'
-	Escribir 'presione 1 para si'
-	Escribir 'cualquier otra tecla para no'
-	Leer tipo_terreno
-	Si tipo_terreno=='1' Entonces
-		Escribir 'como usted va a transitar por terrenos montaños, por politicas de la empresa se le  ha asignado una comioneta 4x4'
-		Tvehiculo <- '1'
-	SiNo
-		Escribir 'Seleccione un vehiculo, 1 para camioneta, 2 para auto, 3 convertible: '
-		Leer Tvehiculo
-	FinSi
-	Escribir '¿quiere alquilar el vehiculo para el fin de semana (viernes, sabado, domingo)?'
-	Escribir 'ingrese 1 para si'
-	Escribir 'ingrese cualquier otra tecla para no'
-	Leer fin_semana
-	Si fin_semana=='1' Entonces
-		cant_dias <- 3
-		tarifa_fin_semana <- 0.5
-	SiNo
-		Escribir 'ingrese la cantidad de dias que quiere alquilar el vehiculo'
-		Leer cant_dias
-	FinSi
-	Si cant_dias<7 Entonces
-		tarifa_por_dia <- tarifa_diaria
-	FinSi
-	Si cant_dias>=7 Y cant_dias<30 Entonces
-		tarifa_por_dia <- tarifa_semanal
-	FinSi
-	Si cant_dias>=30 Entonces
-		tarifa_por_dia <- tarifa_mensual
-	FinSi
-	Escribir '¿Posee licenca de conducir?, ingrese 1 para si, cualquier otra tecla para no.'
-	Leer licencia
-	si licencia == "1" Entonces
-		Escribir 'ingrese el mes de vencimiento de su licencia de conducir'
-		Leer mes_vencimiento
-		Escribir 'ingrese el año de vencimiento de su licencia'
-		Leer año_vencimiento_licencia
-	FinSi
+	
+	tvehiculo = def_terreno
+	
+	
+	
+	
+	
+	cant_dias <- def_fin_semana_si_dias (fin_semana)
+	can_dias <- def_can_dias (fin_semana)
+	
+	tarifa_por_dia <- def_tarifa_por_dia
+
+	licencia <- def_licencia 
+	mes_vencimiento <- def_mes_licencia (licencia)
+	año_vencimiento_licencia <- def_año_licencia (licencia)
+	
+	
+	
 	Si edad>=25 Y licencia=='1' Entonces
-		Repetir
-			Si Tvehiculo<>'1' Y Tvehiculo<>'2' Y Tvehiculo<>'3' Entonces
-				Escribir 'La opcion ingresada no es valida, porfavor intente denuevo.'
-				Leer Tvehiculo
-			FinSi
-		Hasta Que Tvehiculo=='1' O Tvehiculo=='2' O Tvehiculo=='3'
-		Si Tvehiculo=='1' Entonces
-			Escribir 'La opcion que usted ha seleccionado se encuentra disponible, ahora vamos a pedirle algunos datos para validar la reserva.'
-			tvehiculo_factura <- 'camioneta'
-			precio_vehiculo <- 150
-		SiNo
-			Si Tvehiculo=='2' Entonces
-				Escribir 'La opcion que usted ha seleccionado se encuentra disponible, ahora vamos a pedirle algunos datos para validar la reserva.'
-				tvehiculo_factura <- 'auto'
-				precio_vehiculo <- 100
-			SiNo
-				Si Tvehiculo=='3' Entonces
-					Escribir 'La opcion que usted ha seleccionado se encuentra disponible, ahora vamos a pedirle algunos datos para validar la reserva.'
-					tvehiculo_factura <- 'convertible'
-					precio_vehiculo <- 250
-				FinSi
-			FinSi
-		FinSi
-		Escribir 'si usted va a transitar por alguna de las siguientes zonas presione 1, sino presione cualquier otra tecla'
-		Escribir 'circuito chico'
-		Escribir 'cerro catedral'
-		Escribir 'ruta 40'
-		Leer zona
-		Si zona=1 Entonces
-			zona <- 0.5
-		SiNo
-			zona <- 0
-		FinSi
+		tvehiculo <- def_terreno
+		tvehiculo_factura <- def_nombre_vehiculo (Tvehiculo)
+		precio_vehiculo <- def_precio_vehiculo (Tvehiculo)
+		
+		zona <- def_precio_zona 
+		
 		Escribir 'ingrese su numero de DNI o Pasaporte'
 		Leer dni_pasaporte
 		Escribir 'ingrese su domicilio'
 		Leer domicilio
 		Escribir "ingrese su numero de telefono: "
 		Leer numero_telefono
-		Escribir 'Si usted posee nacionalidad argentina presione 1, sino presione cualquier otra tecla'
-		Leer nacionalidad
-		Si nacionalidad = '1' Entonces
-			Escribir '¿usted recide en Bariloche?'
-			Escribir 'presione 1 para si'
-			Escribir 'presione cualquier otra tecla para no'
-			Leer turista_recidente
-			si turista_recidente <> "1" entonces 
-				Escribir 'ingrese el domicilio donde se este quedando, (hotel, departamento, casa de familia, etc)'
-				Leer domicilio_turista
-				turista_recidente <- '2'
-			FinSi
-		SiNo
-			Escribir 'ingrese el domicilio donde se este quedando, (hotel, departamento, casa de familia, etc)'
-			Leer domicilio_turista
-			turista_recidente <- '2'
-		FinSi
+		
+		domicilio_turista <- def_domicilio_turista 
 		
 		Si año_vencimiento_licencia>25 Entonces
-			// calculo del precio
-				precio_total <- cant_dias*(precio_vehiculo+seguro+equipo_invierno-(precio_vehiculo*temporada)-(precio_vehiculo*vip)+(precio_vehiculo*zona)+(precio_vehiculo*tarifa_por_dia))
-				Escribir 'fecha: ', dia_aleatorio, '/', mes, "/25"
-				Escribir "numero de factura: ", numero_factura
-				Escribir 'tipo de vehiculo: ', tvehiculo_factura
-				Escribir "patente del vehiculo asignado: AA", numero_patente, "CD" 
-				Escribir "codigo de permiso municipal: ", permiso_municipal
-				Escribir 'precio del vehiculo por los dias seleccionados: ', (precio_vehiculo*cant_dias)
-				Escribir 'seguro: ', seguro
-				Escribir 'equipo de invierno: ', equipo_invierno
-				Escribir 'descuento vip: ', (vip*precio_vehiculo)
-				Escribir 'descuento por temporada: ', (temporada*precio_vehiculo)
-				Escribir 'recargo por zona: ', (zona*precio_vehiculo)
-				Escribir 'total: ', precio_total
-				Escribir " "
-				Escribir "Datos del cliente: "
-				escribir "Nombre y apellido: ", nombreyapellido
-				Escribir "DNI / Pasaporte : ", dni_pasaporte
-				Escribir "Domicilio: ", domicilio
-				Escribir "Direccion del Hospedaje: ", domicilio_turista
-				Escribir "numero de telefono: ", numero_telefono
-				Escribir "---------------------------------------------------------------------------------------------------------------------"
-				Escribir ""
-				Escribir "¿desea hacer el pago total o en cuaotas?: "
-				Escribir "ingrese 1 para pago total: "
-				Escribir "ingrese cualquier otra tecla para pago en cuotas: "
-				Leer tipo_pago
-				si tipo_pago == "1" Entonces
-					Escribir "usted debe pagar un total de: ", precio_total
-				SiNo
-					Escribir "ingrese el valor que quiere abonar de forma parcial: "
-					leer cuota
-					escribir "el pago fue realizado con exito"
-					Escribir "resta pagar: ", (precio_total - cuota)
-				FinSi
+			precio_total <- def_calculo_precio (cant_dias, precio_vehiculo, seguro, equipo_invierno, temporada, vip, zona, tarifa_por_dia)
+			Escribir 'fecha: ', dia_aleatorio, '/', mes, "/25"
+			Escribir "numero de factura: ", numero_factura
+			Escribir 'tipo de vehiculo: ', tvehiculo_factura
+			Escribir "patente del vehiculo asignado: AA", numero_patente, "CD" 
+			Escribir "codigo de permiso municipal: ", permiso_municipal
+			Escribir 'precio del vehiculo por los dias seleccionados: ', (precio_vehiculo*cant_dias)
+			Escribir 'seguro: ', seguro
+			Escribir 'equipo de invierno: ', equipo_invierno
+			Escribir 'descuento vip: ', (vip*precio_vehiculo)
+			Escribir 'descuento por temporada: ', (temporada*precio_vehiculo)
+			Escribir 'recargo por zona: ', (zona*precio_vehiculo)
+			Escribir 'total: ', precio_total
+			Escribir " "
+			Escribir "Datos del cliente: "
+			escribir "Nombre y apellido: ", nombreyapellido
+			Escribir "DNI / Pasaporte : ", dni_pasaporte
+			Escribir "Domicilio: ", domicilio
+			Escribir "Direccion del Hospedaje: ", domicilio_turista
+			Escribir "numero de telefono: ", numero_telefono
+			Escribir "---------------------------------------------------------------------------------------------------------------------"
+			Escribir ""
+			Escribir "¿desea hacer el pago total o en cuaotas?: "
+			Escribir "ingrese 1 para pago total: "
+			Escribir "ingrese cualquier otra tecla para pago en cuotas: "
+			Leer tipo_pago
+			si tipo_pago == "1" Entonces
+				Escribir "usted debe pagar un total de: ", precio_total
+			SiNo
+				Escribir "ingrese el valor que quiere abonar de forma parcial: "
+				leer cuota
+				escribir "el pago fue realizado con exito"
+				Escribir "resta pagar: ", (precio_total - cuota)
+			FinSi
 		SiNo
 			Si año_vencimiento_licencia>=25 Y mes_vencimiento>mes Entonces
-				// calculo del precio
-				Si Tvehiculo=='1' Entonces
-					precio_total <- cant_dias*(precio_vehiculo+seguro+equipo_invierno-(precio_vehiculo*temporada)-(precio_vehiculo*vip)+(precio_vehiculo*zona)+(precio_vehiculo*tarifa_por_dia))
-				FinSi
+				
+				precio_total <- def_calculo_precio (cant_dias, precio_vehiculo, seguro, equipo_invierno, temporada, vip, zona, tarifa_por_dia)
 				// facturacion
 				Escribir 'fecha: ', dia_aleatorio, '/', mes, "/25"
 				Escribir "numero de factura: ", numero_factura
