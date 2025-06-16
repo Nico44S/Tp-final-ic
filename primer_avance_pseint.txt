@@ -68,6 +68,11 @@ funcion tvehiculo <- def_terreno
 		Escribir 'como usted va a transitar por terrenos montaños, por politicas de la empresa se le  ha asignado una comioneta 4x4'
 		Tvehiculo <- '1'
 	SiNo
+		Escribir "elija el tipo de vehiculo que desee alquilar"
+		Escribir "presione 1 para camioneta"
+		Escribir "presione 2 para auto"
+		Escribir "presione 3 para convertible"
+		leer Tvehiculo 
 		Repetir
 			Si Tvehiculo<>'1' Y Tvehiculo<>'2' Y Tvehiculo<>'3' Entonces
 				Escribir 'La opcion ingresada no es valida, porfavor intente denuevo.'
@@ -106,26 +111,31 @@ funcion año_vencimiento_licencia <- def_año_licencia (licencia)
 	FinSi
 FinFuncion
 
-//funcion  definir cantidad de dias si no es fin de semana
-funcion can_dias <- def_can_dias (fin_semana)
+//funcion para pedir la cantidad de dias si no es fin de semana
+Funcion cant_dias <- def_cant_dias_no_fin_samana (fin_semana)
 	si fin_semana <> "1" Entonces
 		Escribir 'ingrese la cantidad de dias que quiere alquilar el vehiculo'
 		Leer cant_dias
+	sino 
+		cant_dias = 0
+	FinSi
+FinFuncion
+
+
+//funcion para definr la cantidad de dias si es fin de semana
+funcion cant_dias <- def_cant_dias_fin_seman (fin_semana)
+	Si fin_semana=='1' Entonces
+		cant_dias <- 3
+	sino 
+		cant_dias = 0
 	FinSi
 FinFuncion
 
 //funcion para definir la tarifa por dia segun la cantidad de dias que alquilo
-funcion tarifa_por_dia <- def_tarifa_por_dia
-	Escribir '¿quiere alquilar el vehiculo para el fin de semana (viernes, sabado, domingo)?'
-	Escribir 'ingrese 1 para si'
-	Escribir 'ingrese cualquier otra tecla para no'
-	Leer fin_semana
+funcion tarifa_por_dia <- def_tarifa_por_dia (fin_semana, cant_dias)
 	Si fin_semana=='1' Entonces 
-		cant_dias <- 3
 		tarifa_por_dia <- 0.05
 	SiNo
-		Escribir 'ingrese la cantidad de dias que quiere alquilar el vehiculo'
-		Leer cant_dias
 		Si cant_dias < 7 Entonces
 			tarifa_por_dia <- 0
 		SiNo
@@ -142,19 +152,15 @@ FinFuncion
 
 
 
-
 //funcion Para definir el nombre del vehiculo selecionado 
 Funcion tvehiculo_factura <- def_nombre_vehiculo (Tvehiculo)
 	Si Tvehiculo=='1' Entonces
-		Escribir 'La opcion que usted ha seleccionado se encuentra disponible, ahora vamos a pedirle algunos datos para validar la reserva.'
 		tvehiculo_factura <- 'camioneta'
 	SiNo
 		Si Tvehiculo=='2' Entonces
-			Escribir 'La opcion que usted ha seleccionado se encuentra disponible, ahora vamos a pedirle algunos datos para validar la reserva.'
 			tvehiculo_factura <- 'auto'
 		SiNo
 			Si Tvehiculo=='3' Entonces
-				Escribir 'La opcion que usted ha seleccionado se encuentra disponible, ahora vamos a pedirle algunos datos para validar la reserva.'
 				tvehiculo_factura <- 'convertible'
 			FinSi
 		FinSi
@@ -183,8 +189,8 @@ Funcion zona <- def_precio_zona
 	Escribir 'circuito chico'
 	Escribir 'cerro catedral'
 	Escribir 'ruta 40'
-	Leer zona
-	Si zona=1 Entonces
+	Leer zona_1
+	Si zona_1 = "1" Entonces
 		zona <- 0.5
 	SiNo
 		zona <- 0
@@ -220,23 +226,15 @@ FinFuncion
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 //funcion para calcular el precio
-Funcion precio_total <- def_calculo_precio (cant_dias, precio_vehiculo, seguro, equipo_invierno, temporada, vip, zona, tarifa_por_dia)
-	precio_total <- cant_dias*(precio_vehiculo+seguro+equipo_invierno-(precio_vehiculo*temporada)-(precio_vehiculo*vip)+(precio_vehiculo*zona)+(precio_vehiculo*tarifa_por_dia))
+Funcion precio_total_0 <- def_calculo_precio (cant_dias, precio_vehiculo, seguro, equipo_invierno)
+	precio_total_0 <- cant_dias * (precio_vehiculo + seguro + equipo_invierno) 
 FinFuncion
 
-
+//funcion de descuentos y recargos
+Funcion precio_total <- def_descuentos_recargos (precio_total_0, vip, tarifa_por_dia, temporada, zona)
+		precio_total <- precio_total_0 - (precio_total_0 * vip) + (precio_total_0 * tarifa_por_dia) - (precio_total_0 * temporada) + (precio_total_0 * zona) 
+FinFuncion
 
 Algoritmo sin_titulo
 	// generacion aleatoria de dia
@@ -255,7 +253,8 @@ Algoritmo sin_titulo
 	equipo_invierno = def_equipo_invierno (mes)
 	temporada = def_temporada (mes)
 	
-	
+	Escribir "ingrse su mail: "
+	leer mail
 	def_contraseña 
 	
 	
@@ -268,16 +267,12 @@ Algoritmo sin_titulo
 	Escribir 'ingrese su edad: '
 	Leer edad
 	
-	tvehiculo = def_terreno
 	
 	
 	
 	
 	
-	cant_dias <- def_fin_semana_si_dias (fin_semana)
-	can_dias <- def_can_dias (fin_semana)
 	
-	tarifa_por_dia <- def_tarifa_por_dia
 
 	licencia <- def_licencia 
 	mes_vencimiento <- def_mes_licencia (licencia)
@@ -286,11 +281,28 @@ Algoritmo sin_titulo
 	
 	
 	Si edad>=25 Y licencia=='1' Entonces
-		tvehiculo <- def_terreno
+		tvehiculo = def_terreno
+		
+		
+		Escribir '¿quiere alquilar el vehiculo para el fin de semana (viernes, sabado, domingo)?'
+		Escribir 'ingrese 1 para si'
+		Escribir 'ingrese cualquier otra tecla para no'
+		Leer fin_semana
+		cant_dias <- def_cant_dias_no_fin_samana (fin_semana) + def_cant_dias_fin_seman (fin_semana)
+		tarifa_por_dia <- def_tarifa_por_dia (fin_semana, cant_dias)
+	
 		tvehiculo_factura <- def_nombre_vehiculo (Tvehiculo)
 		precio_vehiculo <- def_precio_vehiculo (Tvehiculo)
 		
 		zona <- def_precio_zona 
+		
+		
+		escribir precio_vehiculo
+		Escribir cant_dias
+		
+		
+		
+		
 		
 		Escribir 'ingrese su numero de DNI o Pasaporte'
 		Leer dni_pasaporte
@@ -302,7 +314,8 @@ Algoritmo sin_titulo
 		domicilio_turista <- def_domicilio_turista 
 		
 		Si año_vencimiento_licencia>25 Entonces
-			precio_total <- def_calculo_precio (cant_dias, precio_vehiculo, seguro, equipo_invierno, temporada, vip, zona, tarifa_por_dia)
+			precio_total_0 <-def_calculo_precio (cant_dias, precio_vehiculo, seguro, equipo_invierno)
+			precio_total <- def_descuentos_recargos (precio_total_0, vip, tarifa_por_dia, temporada, zona)
 			Escribir 'fecha: ', dia_aleatorio, '/', mes, "/25"
 			Escribir "numero de factura: ", numero_factura
 			Escribir 'tipo de vehiculo: ', tvehiculo_factura
@@ -339,7 +352,8 @@ Algoritmo sin_titulo
 		SiNo
 			Si año_vencimiento_licencia>=25 Y mes_vencimiento>mes Entonces
 				
-				precio_total <- def_calculo_precio (cant_dias, precio_vehiculo, seguro, equipo_invierno, temporada, vip, zona, tarifa_por_dia)
+				precio_total_0 <- def_calculo_precio (cant_dias, precio_vehiculo, seguro, equipo_invierno)
+				precio_total <- def_descuentos_recargos (precio_total_0, vip, tarifa_por_dia, temporada, zona)
 				// facturacion
 				Escribir 'fecha: ', dia_aleatorio, '/', mes, "/25"
 				Escribir "numero de factura: ", numero_factura
